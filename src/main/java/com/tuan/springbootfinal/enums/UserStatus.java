@@ -1,2 +1,7 @@
-package com.tuan.springbootfinal.enums;public class UserStatus {
+package com.tuan.springbootfinal.enums;
+
+public enum UserStatus {
+    WAITING_CONFIRM,
+    ACTIVE,
+    DISABLE
 }

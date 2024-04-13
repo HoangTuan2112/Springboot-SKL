@@ -28,4 +28,11 @@ public class HandleException extends ResponseEntityExceptionHandler {
                 });
         return handleExceptionInternal(ex, WrapRes.error(WrapResStatus.BAD_REQUEST,errors.toString()), headers, status, request);
     }
+  //throw new RuntimeException("Username is already taken");
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Object> handleRuntimeException(RuntimeException ex, WebRequest request) {
+        System.out.println("HandleException.handleRuntimeException");
+        return handleExceptionInternal(ex, WrapRes.error(WrapResStatus.BAD_REQUEST,ex.getMessage()), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
 }
