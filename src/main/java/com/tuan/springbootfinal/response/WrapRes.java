@@ -31,4 +31,10 @@ public class WrapRes <T>{
         res.setMessage(message);
         return res;
     }
+    public static <T> WrapRes<T> login(String token) {
+        WrapRes<T> res = new WrapRes<>();
+        res.setStatusCode(WrapResStatus.SUCCESS);
+        res.setMessage(token);
+        return res;
+    }
 }

@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -31,5 +33,6 @@ public class User extends  BaseEntity{
     private String avt;
     private UserStatus status;
     private String otp;
+
 
 }
