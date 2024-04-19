@@ -10,6 +10,7 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 public class SignUpReq {
+    private String id;
     @NotBlank(message = "Username is required")
     @Pattern(regexp = "^[a-zA-Z0-9]{6,20}$", message = "Username must be 6-20 characters")
     private String username;
