@@ -1,8 +1,9 @@
 package com.tuan.springbootfinal.until;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.tuan.springbootfinal.exception.JWTException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -32,12 +33,16 @@ public class JWT {
                 .getSubject();
     }
     //extractSessionId
-    public String extractSessionId(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+    public String extractSessionId(String token){
+        try {
+            return Jwts.parser()
+                    .setSigningKey(SECRET_KEY)
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+        } catch (SignatureException | ExpiredJwtException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
+            throw new JWTException("Invalid token");
+        }
     }
 
 }

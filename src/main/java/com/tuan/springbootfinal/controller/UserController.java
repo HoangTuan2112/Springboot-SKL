@@ -42,6 +42,12 @@ public class UserController {
         String user = userService.login(signUpReq);
         return WrapRes.login(user);
     }
+    //logout
+    @PostMapping("/logout")
+    public WrapRes<UserRes> logout(@RequestHeader("Authorization") String token) {
+        userService.logout(token);
+        return WrapRes.success(null);
+    }
     //get profile by token
     @GetMapping("/profile")
     public WrapRes<UserRes> getProfile(@RequestHeader("Authorization") String token) {
