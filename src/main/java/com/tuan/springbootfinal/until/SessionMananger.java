@@ -16,7 +16,6 @@ public class SessionMananger {
     public String createSession(User user) {
         String sessionId = UUID.randomUUID().toString();
         Session session = new Session(sessionId, user);
-        sessions.clear();
         sessions.put(sessionId, session);
         return sessionId;
     }
@@ -27,7 +26,11 @@ public class SessionMananger {
     }
 
     // Xóa phiên làm việc khi nó hết hạn hoặc được hủy bỏ
-    public void removeSession(String sessionId) {
-        sessions.remove(sessionId);
+    public boolean removeSession(String sessionId) {
+        if (sessions.containsKey(sessionId)) {
+            sessions.remove(sessionId);
+            return true;
+        }
+        return false;
     }
 }

@@ -127,6 +127,8 @@ public class UserService {
     @Autowired
     private SessionMananger sessionMananger;
 
+    //relogin remove old session and create new session
+
     public String login(SignUpReq signUpReq){
         User user = userRepository.findByUsername(signUpReq.getUsername());
         if(user==null){
@@ -136,13 +138,21 @@ public class UserService {
             throw new ServiceException("Password incorrect");
         }
 
+
        String sessionID = sessionMananger.createSession(user);
         Session session = sessionMananger.getSession(sessionID);
         return JWTUntils.generateToken(session.getSessionId());
     }
+    //logout
+    public void logout(String token){
+        String sessionId = JWTUntils.extractSessionId(token);
+        sessionMananger.removeSession(sessionId);
+    }
     public UserRes getProfile(String token){
         // Xác minh JWT và lấy thông tin phiên làm việc
-        String sessionId = JWTUntils.extractSessionId(token);
+        String sessionId ;
+       sessionId= JWTUntils.extractSessionId(token);
+
         Session session = sessionMananger.getSession(sessionId);
 
         // Kiểm tra tính hợp lệ của phiên làm việc

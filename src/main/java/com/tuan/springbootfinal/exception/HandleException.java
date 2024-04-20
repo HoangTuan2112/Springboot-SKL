@@ -2,6 +2,7 @@ package com.tuan.springbootfinal.exception;
 
 import com.tuan.springbootfinal.constant.WrapResStatus;
 import com.tuan.springbootfinal.response.WrapRes;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +34,7 @@ public class HandleException extends ResponseEntityExceptionHandler {
     }
 
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Object> handleRuntimeException(RuntimeException ex, WebRequest request) {
-        System.out.println("HandleException.handleRuntimeException");
-        return handleExceptionInternal(ex, WrapRes.error(WrapResStatus.BAD_REQUEST,ex.getMessage()), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-    }
+
 
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<Object> handleServiceException(ServiceException ex, WebRequest request) {
@@ -49,5 +46,16 @@ public class HandleException extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleNotFoundException(NotFoundException ex, WebRequest request) {
         System.out.println("HandleException.handleNotFoundException");
         return handleExceptionInternal(ex, WrapRes.error(WrapResStatus.NOT_FOUND,ex.getMessage()), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<Object> handleUnauthorizedException(UnauthorizedException ex, WebRequest request) {
+        System.out.println("HandleException.handleUnauthorizedException");
+        return handleExceptionInternal(ex, WrapRes.error(WrapResStatus.UNAUTHORIZED,ex.getMessage()), new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
+    }
+    //Jwt exception
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<Object> handleJwtException(JwtException ex, WebRequest request) {
+        System.out.println("HandleException.handleJwtException");
+        return handleExceptionInternal(ex, WrapRes.error(WrapResStatus.SECURITY_ERROR,ex.getMessage()), new HttpHeaders(), HttpStatus.FORBIDDEN ,request);
     }
 }
